@@ -8,13 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="member")
+@Builder
 public class Member {
 
     @Id
@@ -30,10 +30,10 @@ public class Member {
     private String phone; // 선택적 매개변수
     private String email; // 선택적 매개변수
 
-    @Builder
-    public Member(String user_id, String pw, String user_name){
-       this.user_id = user_id;
-       this.pw = pw;
-       this.user_name = user_name;
-    }
+//    @Builder
+//    public Member(String user_id, String pw, String user_name){
+//       this.user_id = user_id;
+//       this.pw = pw;
+//       this.user_name = user_name;
+//    }
 }
