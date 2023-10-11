@@ -1,9 +1,13 @@
 package com.example.chat_board.member;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class MemberDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class SignupDto {
 
     private String user_id;
     private String pw;
