@@ -1,39 +1,42 @@
 package com.example.chat_board.member;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+import static jakarta.persistence.GenerationType.SEQUENCE;
+
+@Data
 @Entity
 @Table(name="member")
+@NoArgsConstructor
 @Builder
+@AllArgsConstructor
 public class Member {
 
     @Id
-    @NotBlank
+    @Column(name = "id")
+    @GeneratedValue(strategy=SEQUENCE, generator="CUST_SEQ")
+    private Long id;
+
+    @Column(name = "user_id")
     private String user_id; // 필수 매개변수
 
-    @NotBlank
+//    @NotBlank
+    @Column(name = "pw")
     private String pw; // 필수 매개변수
 
-    @NotBlank
+//    @NotBlank
+    @Column(name = "user_name")
     private String user_name; // 선택적 매개변수
+
+    @Column(name = "addr")
     private String addr; // 선택적 매개변수
+
+    @Column(name = "phone")
     private String phone; // 선택적 매개변수
+
+    @Column(name = "email")
     private String email; // 선택적 매개변수
 
-//    @Builder
-//    public Member(String user_id, String pw, String user_name){
-//       this.user_id = user_id;
-//       this.pw = pw;
-//       this.user_name = user_name;
-//    }
+
 }
