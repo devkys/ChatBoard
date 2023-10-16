@@ -9,6 +9,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
 
+    // @autowired를 활용할 필드 주입이 아닌 final + 생성자 주입을 사용
     private final MemberRepository memberRepository;
 
     // 전체 회원 조회
@@ -17,16 +18,15 @@ public class MemberService {
     }
 
     // 회원 가입
-    public int signup(MemberDTO memberDTO){
+    public int signup(SignupDto signupDto){
         int result;
         // 비밀번호 불일치시 result 값 0 반환
-        if(!memberDTO.getPw().equals(memberDTO.getPw_confirm())) {
+
+        if(!signupDto.getPw().equals(signupDto.getPw_confirm())) {
             result = 0;
         }
         else {
-            Member member = Member.builder().user_id(memberDTO.getUser_id()).pw(memberDTO.getPw()).
-                    user_name(memberDTO.getUser_name()).addr(memberDTO.getAddr()).email(memberDTO.getEmail()).phone(memberDTO.getPhone()).build();
-
+            Member member = signupDto.toEntity();
             memberRepository.save(member);
             result = 1;
         }
