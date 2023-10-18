@@ -15,7 +15,7 @@
     <p th:if="${#fields.hasErrors('pw')}" th:errors="*{pw}">Incorrect</p>
     비밀번호 확인
     <input type="text" name="pw_confirm" th:field="*{pw_confirm}"> <br>
-    <p th:if="${#fields.hasErrors('pw_confirm')}" th:errors="*{pw_confirm}">Incorrect</p>
+    <p th:field="*{pw_confirm}" th:errors="*{pw_confirm}" >Incorrect</p>
     이름
     <input type="text" name="user_name" th:field="*{user_name}"> <br>
     <p th:if="${#fields.hasErrors('user_name')}" th:errors="*{user_name}">Incorrect</p>
@@ -23,6 +23,8 @@
     <input type="text" name="phone" th:field="*{phone}"> <br>
     <button type="submit">가입하기</button>
 </form>
+
+<a href="signin.html">계정이 있으신가요?</a>
 
 </body>
 </html>
