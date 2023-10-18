@@ -1,7 +1,9 @@
 package com.example.chat_board.member;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
@@ -21,30 +23,50 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    // 회원 가입
-    public int signup(SignupDto signupDto){
-        int result;
-        // 비밀번호 불일치시 result 값 0 반환
+    /* 이메일 중복 확인 ㅓ*/
+//    public void checkEmail(SignupDto signupDto) {
+//        boolean emailDuplicate = memberRepository.findByEmail(signupDto.getEmail());
+//        if(emailDuplicate) {
+//            throw new IllegalStateException("이미 존재하는 이메일입니다.");
+//        }
+//    }
 
-        if(!signupDto.getPw().equals(signupDto.getPw_confirm())) {
-            result = 0;
-        }
-        else {
-            Member member = signupDto.toEntity();
-            memberRepository.save(member);
-            result = 1;
-        }
-        return result;
+    /* 패스워드 불일치 판단 */
+//    public void passwordConfirm(SignupDto signupDto) {
+//        if(!signupDto.getPw_confirm().equals(signupDto.getPw())) {
+//            throw new IllegalStateException("패스워드 불일치");
+//        }
+//    }
+
+    /* 회원가입폼 에러 핸들러 메소드 */
+//    public Map<String, String> validationHandler(Errors errors) {
+//        Map<String, String> validatorResult = new HashMap<>();
+//
+//        for(FieldError error : errors.getFieldErrors()) {
+//            String validKeyName = String.format("valid_%s",error.getField());
+//            validatorResult.put(validKeyName, error.getDefaultMessage());
+//        }
+//        return validatorResult;
+//
+//    }
+
+    public void signup(SignupDto signupDto) {
+
+        Member member = signupDto.toEntity();
+        memberRepository.save(member);
     }
 
-    public Map<String, String> validationHandler(Errors errors) {
-        Map<String, String> validatorResult = new HashMap<>();
+    public boolean signin(SigninDto signinDto) {
+        boolean result = false;
 
-        for(FieldError error : errors.getFieldErrors()) {
-            String validKeyName = String.format("valid_%s",error.getField());
-            validatorResult.put(validKeyName, error.getDefaultMessage());
+        Member loginMember = memberRepository.findByEmail(signinDto.getEmail());
+        if(loginMember == null) {
+            result = false;
         }
-        return validatorResult;
+        if (!loginMember.getPw().equals(signinDto.getPw())){
+            result = true;
+        }
 
+        return result;
     }
 }
