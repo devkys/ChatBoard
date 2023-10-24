@@ -1,15 +1,8 @@
 package com.example.chat_board.member;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -52,21 +45,31 @@ public class MemberService {
 
     public void signup(SignupDto signupDto) {
 
+        // signupdto -> member entity
         Member member = signupDto.toEntity();
         memberRepository.save(member);
     }
 
-    public boolean signin(SigninDto signinDto) {
-        boolean result = false;
-
+    public Member signin(SigninDto signinDto) {
         Member loginMember = memberRepository.findByEmail(signinDto.getEmail());
-        if(loginMember == null) {
-            result = false;
-        }
         if (!loginMember.getPw().equals(signinDto.getPw())){
-            result = true;
+            return null;
         }
-
-        return result;
+        else {
+            return loginMember;
+        }
     }
+
+    /* 아이디 중복 확인 */
+    public int idCheck(String email) {
+        int result = 1;
+        if(memberRepository.findByEmail(email) != null) {
+            System.out.println("중복된 아이디");
+            result = 0;
+        }
+        // 반환값이 1일때 아이디 중복이 아님.
+       return result;
+
+    }
+
 }
