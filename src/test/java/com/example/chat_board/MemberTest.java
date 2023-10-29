@@ -18,7 +18,14 @@ public class MemberTest {
         Member member = Member.builder().user_id("kks").pw("1234").user_name("kks2").build();
         Member member2 = Member.builder().user_id("").pw("1234").user_name("kks2").build();
 
-        repo.save(member);
+        Member member3 = Member.builder().user_id("kks2").pw("1234").user_name("kks2").build();
+
+//        repo.save(member3);
+        // safety save
+       // repo.save(member);
+
+        // Test blank unique test
+        // repo.save(member2);
 
     }
 }
