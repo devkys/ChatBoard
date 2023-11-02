@@ -10,11 +10,12 @@
     이메일
     <input type="text" name="email" th:field="*{email}"> <br>
     <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect</p>
+<!--    <p th:field="*{email}" th:errors="*{email}"></p>-->
     비밀번호
-    <input type="text" name="pw" th:field="*{pw}"> <br>
+    <input type="password" name="pw" th:field="*{pw}"> <br>
     <p th:if="${#fields.hasErrors('pw')}" th:errors="*{pw}">Incorrect</p>
     비밀번호 확인
-    <input type="text" name="pw_confirm" th:field="*{pw_confirm}"> <br>
+    <input type="password" name="pw_confirm" th:field="*{pw_confirm}"> <br>
     <p th:field="*{pw_confirm}" th:errors="*{pw_confirm}" >Incorrect</p>
     이름
     <input type="text" name="user_name" th:field="*{user_name}"> <br>
@@ -24,7 +25,7 @@
     <button type="submit">가입하기</button>
 </form>
 
-<a href="signin.html">계정이 있으신가요?</a>
+<a href="signin">계정이 있으신가요?</a>
 
 </body>
 </html>
