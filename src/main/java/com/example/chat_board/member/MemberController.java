@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
 @RequestMapping("member/*")
 @RequiredArgsConstructor
@@ -41,12 +40,7 @@ public class MemberController {
         }
 
         // 이메일 중복 확인
-        int idDuplicate = memberService.idCheck(signupDto.getEmail());
-        if(idDuplicate == 0) {
-            bindingResult.rejectValue("email", "emailDuplicated","존재하는 이메일");
-            return "member/signup_form";
-
-        }
+        memberService.idCheck(signupDto);
 
         // 패스워드 확인
         if(!signupDto.getPw_confirm().equals(signupDto.getPw())) {

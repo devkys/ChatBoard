@@ -3,6 +3,7 @@ package com.example.chat_board.member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +44,7 @@ public class MemberService {
 //
 //    }
 
+    /* 회원 가입 */
     public void signup(SignupDto signupDto) {
 
         // signupdto -> member entity
@@ -50,26 +52,31 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    /* 아이디 중복 확인 */
+    public void idCheck(SignupDto signupDto) {
+        boolean idDuplicate = memberRepository.existsByEmail(signupDto.toEntity().getEmail());
+        if(idDuplicate) {
+            throw new IllegalStateException("이미 존재하는 이메일 입니다.");
+        }
+    }
+
+    /* 회원 로그인 */
     public Member signin(SigninDto signinDto) {
-        Member loginMember = memberRepository.findByEmail(signinDto.getEmail());
-        if (!loginMember.getPw().equals(signinDto.getPw())){
+        Optional<Member> memberOptional = memberRepository.findByEmail(signinDto.getEmail());
+
+        if(memberOptional.isEmpty()) {
             return null;
         }
-        else {
-            return loginMember;
+
+        Member member = memberOptional.get();
+
+        //비밀번호 비교 메서드
+        if(!member.getPw().equals(signinDto.getPw())) {
+            return null;
         }
+        return member;
     }
 
-    /* 아이디 중복 확인 */
-    public int idCheck(String email) {
-        int result = 1;
-        if(memberRepository.findByEmail(email) != null) {
-            System.out.println("중복된 아이디");
-            result = 0;
-        }
-        // 반환값이 1일때 아이디 중복이 아님.
-       return result;
 
-    }
 
 }
